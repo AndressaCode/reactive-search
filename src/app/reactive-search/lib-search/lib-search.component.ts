@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { ReactiveSearchService } from './../service/reactive-search.service';
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
@@ -23,10 +23,21 @@ export class LibSearchComponent implements OnInit {
     const fields = 'name,description,version,homepage';
     let value = this.queryField.value;
     if (value && (value = value.trim()) !== '') {
+
+      const params_ = {
+        search: value,
+        fields: fields
+      }
+
+      let params = new HttpParams();
+      params.set('search', value),
+      params.set('fields', fields)
+
       this.results$ = this.httpClient
         .get(
-          this.SEARCH_URL +
-            '?fields=' + fields + '&sarch=' + value
+          this.SEARCH_URL, {
+            params
+          }
         )
         .pipe(
           tap((response: any) => (this.total = response.total)),
