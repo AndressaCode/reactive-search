@@ -10,7 +10,6 @@ import { Observable, EMPTY, map, tap } from 'rxjs';
   styleUrls: ['./lib-search.component.scss'],
 })
 export class LibSearchComponent implements OnInit {
-
   queryField = new FormControl();
   readonly SEARCH_URL = 'https://api.cdnjs.com/libraries';
   results$: Observable<any> = EMPTY;
@@ -21,12 +20,18 @@ export class LibSearchComponent implements OnInit {
   ngOnInit(): void {}
 
   onSearch() {
-    console.log(this.queryField.value);
-
-    this.results$ = this.httpClient.get(this.SEARCH_URL + '?search=angular')
-    .pipe(
-      tap((response: any) => this.total = response.total),
-      map((response: any) => response.results)
-    );
+    let value = this.queryField.value;
+    if (value && (value = value.trim()) !== '') {
+      this.results$ = this.httpClient
+        .get(
+          this.SEARCH_URL +
+            '?fields=name,description,version,homepage&sarch=' +
+            value
+        )
+        .pipe(
+          tap((response: any) => (this.total = response.total)),
+          map((response: any) => response.results)
+        );
+    }
   }
 }
