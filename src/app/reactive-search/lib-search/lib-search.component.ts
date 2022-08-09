@@ -20,13 +20,13 @@ export class LibSearchComponent implements OnInit {
   ngOnInit(): void {}
 
   onSearch() {
+    const fields = 'name,description,version,homepage';
     let value = this.queryField.value;
     if (value && (value = value.trim()) !== '') {
       this.results$ = this.httpClient
         .get(
           this.SEARCH_URL +
-            '?fields=name,description,version,homepage&sarch=' +
-            value
+            '?fields=' + fields + '&sarch=' + value
         )
         .pipe(
           tap((response: any) => (this.total = response.total)),
