@@ -31,14 +31,14 @@
         <tr>
           <th>Nome</th>
           <th>Versão</th>
-          <th>Homepage</th>
+          <!-- <th>Homepage</th> -->
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let result of results$ | async ">
           <td> {{ result.name }} </td>
           <td> {{ result.version }}</td>
-          <td> {{ result.homepage }}</td>
+          <!-- <td> {{ result.homepage }}</td> -->
         </tr>
       </tbody>
     </table>
